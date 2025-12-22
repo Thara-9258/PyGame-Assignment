@@ -54,12 +54,24 @@ windowHeight = 500
 window = pygame.display.set_mode((windowWidth, windowHeight))
 clock = pygame.time.Clock()  #will allow us to set framerate
 
+#*********COLOR*************
+GREEN = (0,255,0)
+
+# *********BUTTONS**********
+pygame.draw.rect(window, GREEN, (100,70,240,50))
+pygame.draw.rect(window, GREEN, (101,200,240,50))
+pygame.draw.rect(window, GREEN, (103,332,240,50))
+
+
 # *********GAME LOOP**********
 while True:
     # *********EVENTS**********
-    ev = pygame.event.poll()    # Look for any event
-    if ev.type == pygame.QUIT:  # windowow close button clicked?
-        break                   #   ... leave game loop
+    for event in pygame.event.get():
+        if event.type== pygame.MOUSEMOTION:
+            print(pygame.mouse.get_pos())
+        if event.type == pygame.QUIT: # windowow close button clicked?
+            exit()
+    pygame.display.update()
    
     #PUT YOUR MOUSE/KEYBOARD EVENTS HERE
    
