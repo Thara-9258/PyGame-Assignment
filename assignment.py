@@ -59,13 +59,17 @@ GREEN = (0,255,0)
 RED = (128, 22, 13)
 BLACK = (0,0,0)
 WHITE = (250,250,250)
+DUST = (146, 173, 171)
 #***********BG**************
 
 HomePageBG2 = pygame.image.load ("images/HomePageBG2.png")
 InstructionsButton = pygame.image.load ("images/InstructionsButton.png")
 scaled_image1 = pygame.transform.scale(InstructionsButton, (280,180))
 CharacterButton = pygame.image.load ("images/CharactersButton.png")
-scaled_image2 = pygame.transform.scale(CharacterButton, (280,180))
+scaled_image2 = pygame.transform.scale(CharacterButton, (304,274))
+PlayButton = pygame.image.load("images/PlayButton.png")
+scaled_image3 = pygame.transform.scale(PlayButton, (280,180))
+
 
 #*********Fonts************
 
@@ -74,61 +78,56 @@ font2 = pygame.font.Font("Fonts/Benguiat Bold.ttf", 46)
     
 # *********BUTTONS**********
 
+home_button = [
 
+    pygame.Rect(500, 35, scaled_image1.get_width(), scaled_image1.get_height()),
+    pygame.Rect(488, 90, scaled_image2.get_width(), scaled_image2.get_height()),
+    pygame.Rect(500,220, scaled_image3.get_width(), scaled_image3.get_height())
+    
+]
+
+back_button = pygame.Rect(30, 30, 150, 60)
 
 # *********GAME LOOP**********
-while True:
+Running = True
+while Running:
     # *********EVENTS**********
+    mx, my = pygame.mouse.get_pos()
+
     for event in pygame.event.get():
-        if event.type== pygame.MOUSEMOTION:
-            print(pygame.mouse.get_pos())
-        if event.type == pygame.QUIT: # windowow close button clicked?
-            exit()
-    #pygame.display.update()
+        if event.type == pygame.QUIT:
+            running = False
+
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
    
     #**********MOUSE/KEYBOARD******
+            if state == "HOME":
+                if home_button[0].collidepoint(mx, my): #Checks if mouse clicks button
+                    state = "INSTRUCTIONS"
+                elif home_button[1].collidepoint(mx, my):
+                    state = "CHARACTER"
+                elif home_button[2].collidepoint(mx, my):
+                    state = "PLAY"
 
+            else:
+                if back_button.collidepoint(mx, my):
+                    state = "HOME"
 
     # *********GAME LOGIC**********
-    
-    ChooseChar = "CHARACTERS"
-    Play = "PLAY"
     Gamename = "The Upside Run"
     #PUT YOUR GAME LOGIN HERE FOR EACH GAMESTATE
-    
-    
+
     #*************BG**************
 
     window.fill((0,0,0))
     window.blit(HomePageBG2,(40,23))
     window.blit(scaled_image1,(500,35))
-    window.blit(scaled_image2,(500,135))
+    window.blit(scaled_image2,(488,90))
+    window.blit(scaled_image3, (500,220))
     
     # *********DRAW THE FRAME**********
 
-    
-
-    #pygame.draw.rect(window, WHITE, (500,175,280,70))
-
-    pygame.draw.rect(window, WHITE, (500,275,280,70))
-
-
-
-    #pygame.draw.rect(window, BLACK, (520,185,240,50))
-
-    pygame.draw.rect(window, BLACK, (520,285,240,50))
-
-    pygame.draw.rect(window, BLACK, (420,370,454,85))
-
-
-
-    #renderText =font.render(ChooseChar, 1, pygame.Color("red"))
-    #window.blit(renderText, (527,194))
-
-    renderText =font.render(Play, 1, pygame.Color("red"))
-    window.blit(renderText, (598,294))
-
-    renderText2 =font2.render(Gamename, 1, pygame.Color("red"))
+    renderText2 =font2.render(Gamename, 1, pygame.Color(DUST))
     window.blit(renderText2, (426,380))
 
     #PUT YOUR DRAWING, IMAGE PLACEMENT, BLIT ETC.. COMMANDS HERE FOR EACH GAMESTATE
@@ -140,4 +139,4 @@ while True:
 
 pygame.quit()
 
-#Finish uploading home page images 
+#change the screens for each state
