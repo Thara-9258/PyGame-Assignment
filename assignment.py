@@ -75,6 +75,7 @@ PlayButton = pygame.image.load("images/PlayButton.png")
 InstructionsBG = pygame.image.load("images/InstructionsBG.png")
 CharactersBG = pygame.image.load("images/CharactersBG.png")
 ElevenChar = pygame.image.load("images/ElevenFront.png")
+MikeChar = pygame.image.load("images/MikeFront.png")
 
 #***********SCALED IMAGES**************
 
@@ -84,6 +85,7 @@ scaled_image3 = pygame.transform.scale(PlayButton, (280,180))
 scaled_image4 = pygame.transform.scale(InstructionsBG, (1280, 720))
 scaled_image5 = pygame.transform.scale(CharactersBG, (1280, 720))
 scaled_image6 = pygame.transform.scale(ElevenChar, (225,330))
+scaled_image7 = pygame.transform.scale(MikeChar, (225, 330))
 
 #*********Fonts************
 
@@ -95,8 +97,8 @@ font2 = pygame.font.Font("Fonts/Benguiat Bold.ttf", 46)
 home_button = [
 
     pygame.Rect(500, 35, scaled_image1.get_width(), scaled_image1.get_height()),
-    pygame.Rect(488, 90, scaled_image2.get_width(), scaled_image2.get_height()),
-    pygame.Rect(500,220, scaled_image3.get_width(), scaled_image3.get_height())
+    pygame.Rect(488, 70, scaled_image2.get_width(), scaled_image2.get_height()),
+    pygame.Rect(464,220, scaled_image3.get_width(), scaled_image3.get_height())
     
 ]
 back_button = pygame.Rect(30, 30, 150, 60)
@@ -140,6 +142,7 @@ while Running:
         window.fill(BLACK)
         window.blit(scaled_image5, (0,0))
         window.blit(ElevenChar, (235,160))
+        window.blit(MikeChar, (15,175))
 
     #if state == "PlAY":
     elif state == "HOME":
@@ -165,4 +168,4 @@ while Running:
 
 pygame.quit()
 
-#change the screens for each state
+#fix button ranges
