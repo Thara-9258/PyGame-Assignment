@@ -80,7 +80,7 @@ MikeChar = pygame.image.load("images/MikeFront.png")
 #***********SCALED IMAGES**************
 
 scaled_image1 = pygame.transform.scale(InstructionsButton, (280,180))
-scaled_image2 = pygame.transform.scale(CharacterButton, (304,274))
+scaled_image2 = pygame.transform.scale(CharacterButton, (280,360))
 scaled_image3 = pygame.transform.scale(PlayButton, (280,180))
 scaled_image4 = pygame.transform.scale(InstructionsBG, (1280, 720))
 scaled_image5 = pygame.transform.scale(CharactersBG, (1280, 720))
@@ -96,8 +96,8 @@ font2 = pygame.font.Font("Fonts/Benguiat Bold.ttf", 46)
 
 home_button = [
 
-    pygame.Rect(500, 35, scaled_image1.get_width(), scaled_image1.get_height()),
-    pygame.Rect(488, 70, scaled_image2.get_width(), scaled_image2.get_height()),
+    pygame.Rect(523, 101, 234, 47),
+    pygame.Rect(545, 188, 191, 56),
     pygame.Rect(464,220, scaled_image3.get_width(), scaled_image3.get_height())
     
 ]
@@ -115,21 +115,25 @@ while Running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             Running = False
-
+        if event.type == pygame.MOUSEMOTION:
+            mx, my = event.pos
+            print(mx, my)
+        
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            click_pos = event.pos 
    
     #**********MOUSE/KEYBOARD******
 
             if state == "HOME":
-                if home_button[0].collidepoint(mx, my): #Checks if mouse clicks button
+                if home_button[0].collidepoint(click_pos): #Checks if mouse clicks button
                     state = "INSTRUCTIONS"
-                elif home_button[1].collidepoint(mx, my):
+                elif home_button[1].collidepoint(click_pos):
                     state = "CHARACTERS"
-                elif home_button[2].collidepoint(mx, my):
+                elif home_button[2].collidepoint(click_pos):
                     state = "PLAY"
 
             else:
-                if back_button.collidepoint(mx, my):
+                if back_button.collidepoint(click_pos):
                     state = "HOME"
 
     #*********** STATES ****************
@@ -150,8 +154,10 @@ while Running:
         window.fill((0,0,0))
         window.blit(HomePageBG2,(40,23))
         window.blit(scaled_image1,(500,35))
-        window.blit(scaled_image2,(488,90))
+        window.blit(scaled_image2,(500,50))
         window.blit(scaled_image3, (500,220))
+        #pygame.draw.rect(window, GREEN, (523, 101, 234, 47)),
+        #pygame.draw.rect(window, GREEN, (545, 188, 191, 56)),
         renderText2 =font2.render(Gamename, 1, pygame.Color(DUST))
         window.blit(renderText2, (426,380))
 
