@@ -76,6 +76,7 @@ InstructionsBG = pygame.image.load("images/InstructionsBG.png")
 CharactersBG = pygame.image.load("images/CharactersBG.png")
 ElevenChar = pygame.image.load("images/ElevenFront.png")
 MikeChar = pygame.image.load("images/MikeFront.png")
+DustinChar = pygame.image.load("images/DustinFront.png")
 
 #***********SCALED IMAGES**************
 
@@ -84,8 +85,6 @@ scaled_image2 = pygame.transform.scale(CharacterButton, (280,360))
 scaled_image3 = pygame.transform.scale(PlayButton, (280,180))
 scaled_image4 = pygame.transform.scale(InstructionsBG, (1280, 720))
 scaled_image5 = pygame.transform.scale(CharactersBG, (1280, 720))
-scaled_image6 = pygame.transform.scale(ElevenChar, (225,330))
-scaled_image7 = pygame.transform.scale(MikeChar, (225, 330))
 
 #*********Fonts************
 
@@ -115,9 +114,6 @@ while Running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             Running = False
-        if event.type == pygame.MOUSEMOTION:
-            mx, my = event.pos
-            print(mx, my)
         
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             click_pos = event.pos 
@@ -145,8 +141,10 @@ while Running:
     elif state == "CHARACTERS":
         window.fill(BLACK)
         window.blit(scaled_image5, (0,0))
-        window.blit(ElevenChar, (235,160))
-        window.blit(MikeChar, (15,175))
+        window.blit(ElevenChar, (375,345))
+        window.blit(MikeChar, (170,340))
+        window.blit(DustinChar, (-60,290))
+
 
     #if state == "PlAY":
     elif state == "HOME":
@@ -156,8 +154,6 @@ while Running:
         window.blit(scaled_image1,(500,35))
         window.blit(scaled_image2,(500,50))
         window.blit(scaled_image3, (500,220))
-        #pygame.draw.rect(window, GREEN, (523, 101, 234, 47)),
-        #pygame.draw.rect(window, GREEN, (545, 188, 191, 56)),
         renderText2 =font2.render(Gamename, 1, pygame.Color(DUST))
         window.blit(renderText2, (426,380))
 
