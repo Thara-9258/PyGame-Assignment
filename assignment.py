@@ -77,6 +77,7 @@ CharactersBG = pygame.image.load("images/CharactersBG.png")
 ElevenChar = pygame.image.load("images/ElevenFront.png")
 MikeChar = pygame.image.load("images/MikeFront.png")
 DustinChar = pygame.image.load("images/DustinFront.png")
+WillChar = pygame.image.load("images/WillFront.png")
 
 #***********SCALED IMAGES**************
 
@@ -144,9 +145,12 @@ while Running:
         window.blit(ElevenChar, (375,345))
         window.blit(MikeChar, (170,340))
         window.blit(DustinChar, (-60,290))
+        window.blit(WillChar, (660,210))
 
 
     #if state == "PlAY":
+
+
     elif state == "HOME":
         Gamename = "The Upside Run"
         window.fill((0,0,0))
