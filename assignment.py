@@ -68,16 +68,24 @@ state = "HOME"
 
 #***********IMAGES**************
 
+#Home BG
 HomePageBG2 = pygame.image.load ("images/HomePageBG2.png")
+#Buttons
 InstructionsButton = pygame.image.load ("images/InstructionsButton.png")
 CharacterButton = pygame.image.load ("images/CharactersButton.png")
 PlayButton = pygame.image.load("images/PlayButton.png")
+#State BG
 InstructionsBG = pygame.image.load("images/InstructionsBG.png")
 CharactersBG = pygame.image.load("images/CharactersBG.png")
+#Character State Images
 ElevenChar = pygame.image.load("images/ElevenFront.png")
 MikeChar = pygame.image.load("images/MikeFront.png")
 DustinChar = pygame.image.load("images/DustinFront.png")
 WillChar = pygame.image.load("images/WillFront.png")
+LucasChar = pygame.image.load("images/LucasFront.png")
+#Play State Images
+Maze = pygame.image.load("images/Maze.png")
+
 
 #***********SCALED IMAGES**************
 
@@ -98,7 +106,7 @@ home_button = [
 
     pygame.Rect(523, 101, 234, 47),
     pygame.Rect(545, 188, 191, 56),
-    pygame.Rect(464,220, scaled_image3.get_width(), scaled_image3.get_height())
+    pygame.Rect(562, 288, 155, 37)
     
 ]
 back_button = pygame.Rect(30, 30, 150, 60)
@@ -111,6 +119,7 @@ while Running:
     # *********EVENTS**********
 
     mx, my = pygame.mouse.get_pos()
+    print(mx, my)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -144,11 +153,14 @@ while Running:
         window.blit(scaled_image5, (0,0))
         window.blit(ElevenChar, (375,345))
         window.blit(MikeChar, (170,340))
-        window.blit(DustinChar, (-60,290))
-        window.blit(WillChar, (660,210))
+        window.blit(DustinChar, (-50,290))
+        window.blit(WillChar, (570,170))
+        window.blit(LucasChar, (750, 190))
 
 
-    #if state == "PlAY":
+    elif state == "PLAY":
+        window.fill(BLACK)
+        window.blit (Maze, (0,0))
 
 
     elif state == "HOME":
@@ -174,4 +186,4 @@ while Running:
 
 pygame.quit()
 
-#fix button ranges
+#fix play button range
