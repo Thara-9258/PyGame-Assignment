@@ -53,6 +53,9 @@ windowWidth = 1280
 windowHeight = 720
 window = pygame.display.set_mode((windowWidth, windowHeight))
 clock = pygame.time.Clock()  #will allow us to set framerate
+PlayerX = 61
+PlayerY = 659
+Speed = 5
 
 #*********COLOR*************
 
@@ -116,10 +119,25 @@ back_button = pygame.Rect(30, 30, 150, 60)
 Running = True
 while Running:
 
-    # *********EVENTS**********
+    # *********Sprite Movement**********
 
     mx, my = pygame.mouse.get_pos()
     print(mx, my)
+
+    key = pygame.key.get_pressed()
+
+    if key[pygame.K_d] == True:
+        PlayerX = PlayerX + 1
+    if key[pygame.K_a] == True:
+        PlayerX = PlayerX - Speed
+    if key[pygame.K_s] == True:
+        PlayerY = PlayerY + Speed
+    if key[pygame.K_s] == True:
+        PlayerY = PlayerY - Speed
+
+    PlayerX += (key[pygame.K_RIGHT] - key[pygame.K_LEFT])*Speed
+    PlayerY += (key[pygame.K_DOWN] - key[pygame.K_UP])*Speed
+    # *********EVENTS**********
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -161,6 +179,7 @@ while Running:
     elif state == "PLAY":
         window.fill(BLACK)
         window.blit (Maze, (0,0))
+        pygame.draw.rect(window, GREEN, (PlayerX,PlayerY,20,20))
 
 
     elif state == "HOME":
