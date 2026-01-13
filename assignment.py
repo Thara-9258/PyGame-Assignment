@@ -89,6 +89,12 @@ LucasChar = pygame.image.load("images/LucasFront.png")
 #Play State Images
 Maze = pygame.image.load("images/Maze.png")
 
+#**********MAZE SECTION***************
+
+Maze = Maze.convert_alpha()
+maze_rect = Maze.get_rect(topleft=(0, 0))
+maze_mask = pygame.mask.from_surface(Maze, 127)
+player_mask = pygame.mask.Mask((20, 20), fill=True)
 
 #***********SCALED IMAGES**************
 
@@ -126,14 +132,41 @@ while Running:
 
     key = pygame.key.get_pressed()
 
-    if key[pygame.K_d] == True:
-        PlayerX = PlayerX + 1
-    if key[pygame.K_a] == True:
-        PlayerX = PlayerX - Speed
-    if key[pygame.K_s] == True:
-        PlayerY = PlayerY + Speed
-    if key[pygame.K_s] == True:
-        PlayerY = PlayerY - Speed
+    if key[pygame.K_d] == True and state == "PLAY":
+        test_rect = pygame.Rect(PlayerX + Speed, PlayerY, 20, 20)
+        offset = (test_rect.x - maze_rect.x, test_rect.y - maze_rect.y)
+        if maze_mask.overlap(player_mask, offset) is None:
+            PlayerX = PlayerX + Speed
+
+    #if key[pygame.K_d] == True:
+        #PlayerX = PlayerX + 1
+
+    if key[pygame.K_a] == True and state == "PLAY":
+        test_rect = pygame.Rect(PlayerX - Speed, PlayerY, 20, 20)
+        offset = (test_rect.x - maze_rect.x, test_rect.y - maze_rect.y)
+        if maze_mask.overlap(player_mask, offset) is None:
+            PlayerX = PlayerX - Speed
+
+    #if key[pygame.K_a] == True:
+        #PlayerX = PlayerX - Speed
+
+    if key[pygame.K_s] == True and state == "PLAY":
+        test_rect = pygame.Rect(PlayerX, PlayerY + Speed, 20, 20)
+        offset = (test_rect.x - maze_rect.x, test_rect.y - maze_rect.y)
+        if maze_mask.overlap(player_mask, offset) is None:
+            PlayerY = PlayerY + Speed
+
+    #if key[pygame.K_s] == True:
+        #PlayerY = PlayerY + Speed
+
+    if key[pygame.K_w] == True and state == "PLAY":
+        test_rect = pygame.Rect(PlayerX, PlayerY - Speed, 20, 20)
+        offset = (test_rect.x - maze_rect.x, test_rect.y - maze_rect.y)
+        if maze_mask.overlap(player_mask, offset) is None:
+            PlayerY = PlayerY - Speed
+
+   #if key[pygame.K_w] == True:
+        #PlayerY = PlayerY - Speed
 
     PlayerX += (key[pygame.K_RIGHT] - key[pygame.K_LEFT])*Speed
     PlayerY += (key[pygame.K_DOWN] - key[pygame.K_UP])*Speed
@@ -205,4 +238,4 @@ while Running:
 
 pygame.quit()
 
-#fix play button range
+#fix maze 
