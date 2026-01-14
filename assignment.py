@@ -92,7 +92,7 @@ Maze = pygame.image.load("images/Maze.png")
 #**********MAZE SECTION***************
 
 Maze = Maze.convert_alpha()
-maze_rect = Maze.get_rect(topleft=(0, 0))
+maze_rect = Maze.get_rect(topleft=(-310, -40))
 maze_mask = pygame.mask.from_surface(Maze, 127)
 player_mask = pygame.mask.Mask((20, 20), fill=True)
 
@@ -211,7 +211,7 @@ while Running:
 
     elif state == "PLAY":
         window.fill(BLACK)
-        window.blit (Maze, (0,0))
+        window.blit (Maze, (-310,-40))
         pygame.draw.rect(window, GREEN, (PlayerX,PlayerY,20,20))
 
 
@@ -238,4 +238,4 @@ while Running:
 
 pygame.quit()
 
-#fix maze 
+#Get Sprite, put music 
