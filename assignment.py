@@ -45,6 +45,7 @@ Features Added Beyond Level 3 Requirements:
 '''
 
 import pygame
+from pygame import mixer 
 pygame.init()
 
 # *********SETUP**********
@@ -56,6 +57,12 @@ clock = pygame.time.Clock()  #will allow us to set framerate
 PlayerX = 61
 PlayerY = 659
 Speed = 5
+
+# *********MUSIC************
+
+BackgroundSound = pygame.mixer.Sound("Sound/StrangerThings.mp3")
+BackgroundSound.set_volume(1.0) 
+BackgroundSound.play(-1)
 
 #*********COLOR*************
 
@@ -238,4 +245,4 @@ while Running:
 
 pygame.quit()
 
-#Get Sprite, put music 
+#Get Sprite
