@@ -100,7 +100,7 @@ ElevenSprite = pygame.image.load("images/ElevenSprite.png")
 #**********MAZE SECTION***************
 
 Maze = Maze.convert_alpha()
-maze_rect = Maze.get_rect(topleft=(0,0))
+maze_rect = Maze.get_rect(topleft=(-225,0))
 maze_mask = pygame.mask.from_surface(Maze, 127)
 player_mask = pygame.mask.Mask((14,14), fill=True)
 
@@ -211,9 +211,15 @@ while Running:
 
     elif state == "PLAY":
         window.fill(BLACK)
-        window.blit (Maze,(0,0))
-        pygame.draw.rect(window, GREEN, (PlayerX,PlayerY,20,20))
-        window.blit(ElevenSprite, (PlayerX,PlayerY))
+        window.blit (Maze,(-225,0))
+        player_rect = pygame.draw.rect(window, GREEN, (PlayerX,PlayerY,20,20))
+
+        x = player_rect.x
+        y = player_rect.y
+
+        offset1 = 40
+        offset2 = 40       
+        window.blit(ElevenSprite, (x - offset1, y - offset2))
 
 
     elif state == "HOME":
@@ -239,4 +245,4 @@ while Running:
 
 pygame.quit()
 
-#Align Sprites
+#Create eggos loop
