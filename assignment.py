@@ -118,6 +118,7 @@ DemoSprite = pygame.image.load("images/DemoSprite.png")
 Eggos = pygame.image.load("images/Eggo.png")
 #Quit BG
 QuitBG = pygame.image.load("images/QuitBg.png")
+back_button = pygame.image.load("images/BackButton.png")
 
 #**********MAZE SECTION***************
 
@@ -137,6 +138,7 @@ scaled_image2 = pygame.transform.scale(CharacterButton, (280,360))
 scaled_image3 = pygame.transform.scale(PlayButton, (280,180))
 scaled_image4 = pygame.transform.scale(InstructionsBG, (1280, 720))
 scaled_image5 = pygame.transform.scale(CharactersBG, (1280, 720))
+scaled_image6 = pygame.transform.scale(back_button, (600,360))
 
 #*********Fonts************
 
@@ -152,7 +154,7 @@ home_button = [
     pygame.Rect(562, 288, 155, 37)
     
 ]
-back_button = pygame.Rect(30, 30, 150, 60)
+#back_button = pygame.Rect(30, 30, 150, 60)
 
 # *********GAME LOOP**********
 
@@ -239,37 +241,45 @@ while Running:
                 elif home_button[2].collidepoint(click_pos):
                     state = "PLAY"
 
-            else:
-                if back_button.collidepoint(click_pos):
-                    state = "HOME"
-
     #*********** STATES ****************
 
     if state == "INSTRUCTIONS":
         window.fill(BLACK)
         window.blit(scaled_image4, (0,0))
+    
+        button_rect = pygame.Rect(55,24, 191, 63)
+        window.blit(scaled_image6, (-150,-125))
+
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            click_pos = event.pos
+            if button_rect.collidepoint(click_pos):
+                state = "HOME"
+        
         InstructionsHeader = "INSTRUCTIONS "
         renderText5 = font.render (InstructionsHeader,1, pygame.Color (DUST))
 
         window.blit(renderText5, (180,125))
-        InstructionsCaption1 = " The goal of the game is to collect as"
-        InstructionsCaption2 = " many eggos as possible without the "
-        InstructionsCaption3 = " demogrogron catching you"
+        InstructionsCaption1 = " The goal is for the player to collect as"
+        InstructionsCaption2 = " many eggo without the "
+        InstructionsCaption3 = " demogrogron catching them"
 
         renderText6 = font3.render (InstructionsCaption1,1, pygame.Color (DUST))
         renderText7 = font3.render (InstructionsCaption2,1, pygame.Color (DUST))
         renderText8 = font3.render (InstructionsCaption3,1, pygame.Color (DUST))
         
         window.blit(renderText6, (114,225))
-        window.blit(renderText7, (114,250))
-        window.blit(renderText8, (146,275))
+        window.blit(renderText7, (184,250))
+        window.blit(renderText8, (156,275))
 
-        InstructionsCaption4 = " - Use WASD key to move"
-        InstructionsCaption5 = " - Collect the eggos as the appear"
+        InstructionsCaption4 = " - Use WASD key to move player"
+        InstructionsCaption5 = " - Collect the eggos as they appear"
         InstructionsCaption6 = " - Each eggo is worth 100 points"
-        InstructionsCaption7 = " - if you wish to quit, exit the maze"
+        InstructionsCaption7 = " - If you wish to quit, exit the maze"
         InstructionsCaption8 = " - You lose if the demogorgon catches you"
-        InstructionsCaption9 = " - The demogorgons will get faster the longer you play"
+        InstructionsCaption9 = " - The demogorgon's goal is to catch the player"
+        InstructionsCaption10 = " - Use IJKL key to move demogorgon"
+        InstructionsCaption11 = " - The game ends if the demogorgon catches the player"
+        InstructionsCaption12 = " - or if the player gains 800 points"
 
         renderText9 = font3.render (InstructionsCaption4,1, pygame.Color (DUST))
         renderText10 = font3.render (InstructionsCaption5,1, pygame.Color (DUST))
@@ -277,16 +287,23 @@ while Running:
         renderText12 = font3.render (InstructionsCaption7,1, pygame.Color (DUST))
         renderText13 = font3.render (InstructionsCaption8,1, pygame.Color (DUST))
         renderText14 = font3.render (InstructionsCaption9,1, pygame.Color (DUST))
+        renderText15 = font3.render (InstructionsCaption10,1, pygame.Color (DUST))
+        renderText16 = font3. render(InstructionsCaption11,1,pygame.Color (DUST))
+        renderText17 = font3. render(InstructionsCaption12,1, pygame.Color (DUST))
 
-        window.blit(renderText9, (136,375))
-        window.blit(renderText10, (136,425))
-        window.blit(renderText11, (136,475))
-        window.blit(renderText12, (136,525))
-        window.blit(renderText13, (136,575))
-        window.blit(renderText14, (136,625))
+        window.blit(renderText9, (114,390))
+        window.blit(renderText10, (114,420))
+        window.blit(renderText11, (114,460))
+        window.blit(renderText12, (114,495))
+        window.blit(renderText13, (114,530))
+        window.blit(renderText14, (114,565))
+        window.blit(renderText15, (114,600))
+        window.blit(renderText16, (114,635))
+        window.blit(renderText17, (114,670))
 
         
     elif state == "CHARACTERS":
+
         window.fill(BLACK)
         window.blit(scaled_image5, (0,0))
         window.blit(ElevenChar, (375,345))
@@ -294,6 +311,13 @@ while Running:
         window.blit(DustinChar, (-50,290))
         window.blit(WillChar, (570,170))
         window.blit(LucasChar, (750, 190))
+
+        button_rect = pygame.Rect(55,24, 191, 63)
+        window.blit(scaled_image6, (-150,-125))
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            click_pos = event.pos
+            if button_rect.collidepoint(click_pos):
+                state = "HOME"
 
 
     elif state == "PLAY":
