@@ -45,6 +45,7 @@ Features Added Beyond Level 3 Requirements:
 '''
 
 import pygame
+import random
 from pygame import mixer 
 pygame.init()
 
@@ -54,9 +55,25 @@ windowWidth = 1280
 windowHeight = 720
 window = pygame.display.set_mode((windowWidth, windowHeight))
 clock = pygame.time.Clock()  #will allow us to set framerate
+
 PlayerX = 61
 PlayerY = 659
 Speed = 5
+
+DemoX = 900
+DemoY = 100
+DemoSpeed = 5
+
+EggoCoordinates = [
+    (145, 460),
+    (456, 232),
+    (452, 416),
+    (766, 594),
+    (688, 335),
+    (846, 190),
+    (1076, 445),
+    (1158, 164)
+]
 
 # *********MUSIC************
 
@@ -96,13 +113,22 @@ LucasChar = pygame.image.load("images/LucasFront.png")
 #Play State Images
 Maze = pygame.image.load("images/Maze.png")
 ElevenSprite = pygame.image.load("images/ElevenSprite.png")
+DemoSprite = pygame.image.load("images/DemoSprite.png")
+#Eggos
+Eggos = pygame.image.load("images/Eggo.png")
+#Quit BG
+QuitBG = pygame.image.load("images/QuitBg.png")
 
 #**********MAZE SECTION***************
 
 Maze = Maze.convert_alpha()
 maze_rect = Maze.get_rect(topleft=(-225,0))
 maze_mask = pygame.mask.from_surface(Maze, 127)
-player_mask = pygame.mask.Mask((14,14), fill=True)
+player_mask = pygame.mask.Mask((5,5), fill=True)
+demo_mask = pygame.mask.Mask((5,5), fill=True)
+CurrentEggo = None
+RemainingEggos = EggoCoordinates.copy()
+CurrentScore = 0
 
 #***********SCALED IMAGES**************
 
@@ -116,7 +142,7 @@ scaled_image5 = pygame.transform.scale(CharactersBG, (1280, 720))
 
 font = pygame.font.Font("Fonts/Benguiat Bold.ttf", 26)
 font2 = pygame.font.Font("Fonts/Benguiat Bold.ttf", 46)
-    
+font3 = pygame.font.Font("Fonts/Benguiat Bold.ttf", 16)
 # *********BUTTONS**********
 
 home_button = [
@@ -140,14 +166,38 @@ while Running:
 
     key = pygame.key.get_pressed()
 
-    if key[pygame.K_d] == True and state == "PLAY":
+    if key[pygame.K_l] and state == "PLAY":
+        test_rect = pygame.Rect(DemoX + DemoSpeed, DemoY, 20, 20)
+        offset = (test_rect.x - maze_rect.x, test_rect.y - maze_rect.y)
+        if maze_mask.overlap(demo_mask, offset) is None:
+            DemoX += DemoSpeed
+
+    if key[pygame.K_j] and state == "PLAY":
+        test_rect = pygame.Rect(DemoX - DemoSpeed, DemoY, 20, 20)
+        offset = (test_rect.x - maze_rect.x, test_rect.y - maze_rect.y)
+        if maze_mask.overlap(demo_mask, offset) is None:
+            DemoX -= DemoSpeed
+
+    if key[pygame.K_k] and state == "PLAY":
+        test_rect = pygame.Rect(DemoX, DemoY + DemoSpeed, 20, 20)
+        offset = (test_rect.x - maze_rect.x, test_rect.y - maze_rect.y)
+        if maze_mask.overlap(demo_mask, offset) is None:
+            DemoY += DemoSpeed
+
+    if key[pygame.K_i] and state == "PLAY":
+        test_rect = pygame.Rect(DemoX, DemoY - DemoSpeed, 20, 20)
+        offset = (test_rect.x - maze_rect.x, test_rect.y - maze_rect.y)
+        if maze_mask.overlap(demo_mask, offset) is None:
+            DemoY -= DemoSpeed
+
+    if key[pygame.K_d] and state == "PLAY":
         test_rect = pygame.Rect(PlayerX + Speed, PlayerY, 20, 20)
         offset = (test_rect.x - maze_rect.x, test_rect.y - maze_rect.y)
         if maze_mask.overlap(player_mask, offset) is None:
-            PlayerX = PlayerX + Speed
+                PlayerX = PlayerX + Speed
 
 
-    if key[pygame.K_a] == True and state == "PLAY":
+    if key[pygame.K_a] and state == "PLAY":
         test_rect = pygame.Rect(PlayerX - Speed, PlayerY, 20, 20)
         offset = (test_rect.x - maze_rect.x, test_rect.y - maze_rect.y)
         if maze_mask.overlap(player_mask, offset) is None:
@@ -198,6 +248,43 @@ while Running:
     if state == "INSTRUCTIONS":
         window.fill(BLACK)
         window.blit(scaled_image4, (0,0))
+        InstructionsHeader = "INSTRUCTIONS "
+        renderText5 = font.render (InstructionsHeader,1, pygame.Color (DUST))
+
+        window.blit(renderText5, (180,125))
+        InstructionsCaption1 = " The goal of the game is to collect as"
+        InstructionsCaption2 = " many eggos as possible without the "
+        InstructionsCaption3 = " demogrogron catching you"
+
+        renderText6 = font3.render (InstructionsCaption1,1, pygame.Color (DUST))
+        renderText7 = font3.render (InstructionsCaption2,1, pygame.Color (DUST))
+        renderText8 = font3.render (InstructionsCaption3,1, pygame.Color (DUST))
+        
+        window.blit(renderText6, (114,225))
+        window.blit(renderText7, (114,250))
+        window.blit(renderText8, (146,275))
+
+        InstructionsCaption4 = " - Use WASD key to move"
+        InstructionsCaption5 = " - Collect the eggos as the appear"
+        InstructionsCaption6 = " - Each eggo is worth 100 points"
+        InstructionsCaption7 = " - if you wish to quit, exit the maze"
+        InstructionsCaption8 = " - You lose if the demogorgon catches you"
+        InstructionsCaption9 = " - The demogorgons will get faster the longer you play"
+
+        renderText9 = font3.render (InstructionsCaption4,1, pygame.Color (DUST))
+        renderText10 = font3.render (InstructionsCaption5,1, pygame.Color (DUST))
+        renderText11 = font3.render (InstructionsCaption6,1, pygame.Color (DUST))
+        renderText12 = font3.render (InstructionsCaption7,1, pygame.Color (DUST))
+        renderText13 = font3.render (InstructionsCaption8,1, pygame.Color (DUST))
+        renderText14 = font3.render (InstructionsCaption9,1, pygame.Color (DUST))
+
+        window.blit(renderText9, (136,375))
+        window.blit(renderText10, (136,425))
+        window.blit(renderText11, (136,475))
+        window.blit(renderText12, (136,525))
+        window.blit(renderText13, (136,575))
+        window.blit(renderText14, (136,625))
+
         
     elif state == "CHARACTERS":
         window.fill(BLACK)
@@ -213,14 +300,57 @@ while Running:
         window.fill(BLACK)
         window.blit (Maze,(-225,0))
         player_rect = pygame.draw.rect(window, GREEN, (PlayerX,PlayerY,20,20))
+        demo_rect = pygame.Rect(DemoX, DemoY, 20, 20)
 
         x = player_rect.x
         y = player_rect.y
 
+        a = demo_rect.x
+        b = demo_rect.y
+
         offset1 = 40
         offset2 = 40       
         window.blit(ElevenSprite, (x - offset1, y - offset2))
+        window.blit(DemoSprite, (a - offset1, b - offset2))
 
+        if player_rect.right < 0:
+            state = "QUIT"
+        elif player_rect.left > windowWidth:
+            state = "QUIT"
+
+        if demo_rect.right < 0:
+            state = "QUIT"
+        elif demo_rect.left > windowWidth:
+            state = "QUIT"
+
+        if CurrentEggo is None:
+            if not RemainingEggos:
+                RemainingEggos = EggoCoordinates.copy()
+            EggoLocation = random.choice(RemainingEggos)
+            CurrentEggo = True 
+        if CurrentEggo == True:
+            window.blit(Eggos, EggoLocation)
+            EggoRect = pygame.Rect(EggoLocation[0], EggoLocation[1], Eggos.get_width(), Eggos.get_height())
+            if player_rect.colliderect(EggoRect):
+                CurrentEggo = None
+                RemainingEggos.remove(EggoLocation)
+                CurrentScore += 100
+
+        demo_rect = pygame.Rect(DemoX, DemoY, 20, 20)
+        if player_rect.colliderect(demo_rect):
+            state = "QUIT" 
+
+    elif state == "QUIT":
+        window.fill((0,0,0))
+        window.blit(QuitBG, (0,0))
+        QuitCaption1 = "You have quit the Game! Better luck next time!"
+        renderText3 = font.render (QuitCaption1,1, pygame.Color (DUST))
+        window.blit(renderText3, (500,650))
+        QuitCaption2 = "Your Current Score is: "
+        renderText4 = font.render (QuitCaption2 + str(CurrentScore),1, pygame.Color (RED))
+        window.blit(renderText4, (300,150))
+
+    
 
     elif state == "HOME":
         Gamename = "The Upside Run"
@@ -245,4 +375,4 @@ while Running:
 
 pygame.quit()
 
-#Create eggos loop
+#Comment, back button, Instructions
